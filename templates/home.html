@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h1>Welcome to Tahoe Ski Reports!</h1>
+	{% for resort in resorts %}
+		<h2>{{resort.resort}}</h2>
+		<p>As of {{resort.last_updated}}</p>
+		<ul>
+			<li>Snow depth: {{resort.snow_depth}}</li>
+			<li>Lifts open: {{resort.lifts_open}}/{{resort.total_lifts}}</li>
+		</ul>
+	{% endfor %}
+{% endblock content %}
