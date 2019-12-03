@@ -1,12 +1,27 @@
 {% extends 'layout.html' %}
 {% block content %}
-	<h1>Welcome to Tahoe Ski Reports!</h1>
+<!-- <h1>Welcome to Tahoe Ski Reports!</h1> -->
 	{% for resort in resorts %}
-		<h2>{{resort.resort}}</h2>
+		<!-- <h2>{{resort.name}}</h2>
 		<p>As of {{resort.last_updated}}</p>
 		<ul>
 			<li>Snow depth: {{resort.snow_depth}}</li>
 			<li>Lifts open: {{resort.lifts_open}}/{{resort.total_lifts}}</li>
-		</ul>
+		</ul> -->
+	<article class="media content-section">
+		<div class="media-body">
+			<div class="article-metadata">
+				<!-- <a class="mr-2" href="#">{{ resort.name }}</a> -->
+				<small class="text-muted">{{ resort.last_updated }}</small>
+			</div>
+			<h2><a class="article-title" href="#">{{ resort.name }}</a></h2>
+			<!-- <p class="article-content"> -->
+				<ul>
+					<li>Snow depth: {{resort.snow_depth}}</li>
+					<li>Lifts open: {{resort.lifts_open}}/{{resort.total_lifts}}</li>
+				</ul>
+			<!-- </p> -->
+		</div>
+	</article>
 	{% endfor %}
 {% endblock content %}

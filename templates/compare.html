@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block content %}
+<table class="table table-hover">
+	<thead class="thead-dark">
+		<tr>
+			<td scope="col"><b>Resort</b></td>
+			<td scope="col"><b>Date of Report</b></td>
+			<td scope="col"><b>Snow Depth</b></td>
+			<td scope="col"><b>Lifts Open</b></td>
+			<td scope="col"><b>% of Lifts Open</b></td>
+		</tr>
+	</thead>
+	<tbody>	
+		{% for resort in resorts %}
+		<tr>
+			<td>{{resort.name}}</td>
+			<td>{{resort.last_updated}}</td>
+			<td>{{resort.snow_depth}}</td>
+			<td>{{resort.lifts_open}}</td>
+			<td>{{ ((resort.lifts_open / resort.total_lifts) * 100) | round(1)}}%</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock content %}

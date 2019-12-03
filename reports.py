@@ -3,26 +3,29 @@ app = Flask(__name__)
 
 resorts = [
 	{
-		'resort': 'Kirkwood',
+		'name': 'Kirkwood',
 		'snow_depth': 15.5,
 		'lifts_open': 10,
 		'total_lifts': 50,
 		'last_updated': '2019-11-28'
 	},
 	{
-		'resort': 'Heavenly',
+		'name': 'Heavenly',
 		'snow_depth': 35.5,
 		'lifts_open': 18,
 		'total_lifts': 65,
 		'last_updated': '2019-11-28'
 	},
-
 ]
 
 @app.route('/')
 @app.route('/home')
-def hello_world():
+def home():
     return render_template('home.html',resorts=resorts)
+
+@app.route('/compare')
+def compare():
+	return render_template('compare.html', resorts=resorts)
 
 @app.route('/about')
 def about():

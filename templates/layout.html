@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,22 +14,23 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
 	{% if title %}
-	<title>Tahoe Ski Report - {{ title }}</title>
+	<title>Tahoe Snow Reports - {{ title }}</title>
 	{% else %}
-	<title>Tahoe Ski Reports</title>
+	<title>Tahoe Snow Reports</title>
 	{% endif %}
 </head>
 <body>
 	<header class="site-header">
 		<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
 			<div class="container">
-				<a class="navbar-brand mr-4" href="/">Flask Blog</a>
+				<a class="navbar-brand mr-4" href="/">Tahoe Snow Reports</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
 						<a class="nav-item nav-link" href="/">Home</a>
+						<a class="nav-item nav-link" href="/compare">Compare</a>
 						<a class="nav-item nav-link" href="/about">About</a>
 					</div>
 					<!-- Navbar Right Side 
@@ -42,10 +46,11 @@
 
 	<main role="main" class="container">
 		<div class="row">
-			<div class="col-md-8">
+			<!-- <div class="col-md-8"> -->
+			<div class="col-md-12">
 				{% block content %}{% endblock %}
 			</div>
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<div class="content-section">
 					<h3>Our Sidebar</h3>
 					<p class='text-muted'>You can put any information here you'd like.
@@ -57,7 +62,7 @@
 						</ul>
 					</p>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</main>
 
