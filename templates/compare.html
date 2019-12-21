@@ -11,13 +11,13 @@
 		</tr>
 	</thead>
 	<tbody>	
-		{% for resort in resorts %}
+		{% for resort in resorts['resorts'] %}
 		<tr>
 			<td>{{resort.name}}</td>
-			<td>{{resort.last_updated}}</td>
-			<td>{{resort.snow_depth}}</td>
-			<td>{{resort.lifts_open}}</td>
-			<td>{{ ((resort.lifts_open / resort.total_lifts) * 100) | round(1)}}%</td>
+			<td>{{resort.latest_report.last_updated}}</td>
+			<td>{{resort.latest_report.snow_depth}}</td>
+			<td>{{resort.latest_report.lifts_open}}</td>
+			<td>{{ ((resort.latest_report.lifts_open / resort.latest_report.total_lifts) * 100) | round(1)}}%</td>
 		</tr>
 		{% endfor %}
 	</tbody>

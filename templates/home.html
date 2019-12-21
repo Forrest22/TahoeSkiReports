@@ -1,27 +1,29 @@
 {% extends 'layout.html' %}
 {% block content %}
-<!-- <h1>Welcome to Tahoe Ski Reports!</h1> -->
-	{% for resort in resorts %}
-		<!-- <h2>{{resort.name}}</h2>
-		<p>As of {{resort.last_updated}}</p>
-		<ul>
-			<li>Snow depth: {{resort.snow_depth}}</li>
-			<li>Lifts open: {{resort.lifts_open}}/{{resort.total_lifts}}</li>
-		</ul> -->
-	<article class="media content-section">
-		<div class="media-body">
-			<div class="article-metadata">
-				<!-- <a class="mr-2" href="#">{{ resort.name }}</a> -->
-				<small class="text-muted">{{ resort.last_updated }}</small>
+<h1>Welcome to Tahoe Ski Reports!</h1>
+<div class="album py-5 bg-light">
+	<div class="container">
+		<div class="row">
+			{% for resort in resorts['resorts'] %}
+			<div class="col-md-4">
+				<div class="card box-shadow {{resort.name}}">
+					<div class="card-img-top" style="position: relative;">
+						<!-- <h2 class="bottom-left">{{resort.name}}</h2> -->
+						<img class="card-img-top" style="height: 225px; width: 100%; display: block; object-fit: cover; /*opacity: 0.8*/" src="/static/{{resort.img}}" data-holder-rendered="true">
+					</div>
+					<div class="card-body">
+						<h2>{{resort.name}}</h2>
+						<p>As of {{resort.latest_report.last_updated}}</p>
+						<ul>
+							<li>Depth: {{resort.latest_report.snow_depth}} {{resort.latest_report.units}}</li>
+							<li>Lifts open: {{resort.latest_report.lifts_open}}</li>
+							<!-- <li>Lifts open: {{((resort.latest_report.lifts_open / resort.latest_report.total_lifts) * 100) | round(1)}}%</li> -->
+						</ul>
+					</div>
+				</div>
 			</div>
-			<h2><a class="article-title" href="#">{{ resort.name }}</a></h2>
-			<!-- <p class="article-content"> -->
-				<ul>
-					<li>Snow depth: {{resort.snow_depth}}</li>
-					<li>Lifts open: {{resort.lifts_open}}/{{resort.total_lifts}}</li>
-				</ul>
-			<!-- </p> -->
+			{% endfor %}
 		</div>
-	</article>
-	{% endfor %}
+	</div>
+</div>
 {% endblock content %}

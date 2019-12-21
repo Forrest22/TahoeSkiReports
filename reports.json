@@ -1,0 +1,68 @@
+{ "resorts": [
+	{	"name": "Kirkwood",
+		"img": "kirkwood-bg.jpg",
+		"latest_report": {
+			"snow_depth": 15.5,
+			"lifts_open": 10,
+			"total_lifts": 50,
+			"last_updated": "2019-11-28",
+			"units": "in."
+		},
+		"reports": [
+			{
+				"snow_depth": 15.5,
+				"lifts_open": 10,
+				"total_lifts": 50,
+				"last_updated": "2019-11-28"
+			},{
+				"snow_depth": 15.5,
+				"lifts_open": 10,
+				"total_lifts": 50,
+				"last_updated": "2019-11-28"
+			}]	
+	},
+	{	"name": "Heavenly",
+		"img": "heavenly-bg.jpg",
+		"latest_report": {
+			"snow_depth": 35.5,
+			"lifts_open": 11,
+			"total_lifts": 33,
+			"last_updated": "2019-11-28",
+			"units": "in."
+		},
+		"reports": [
+			{
+				"snow_depth": 35.5,
+				"lifts_open": 18,
+				"total_lifts": 65,
+				"last_updated": "2019-11-28"
+			},{
+				"snow_depth": 35.5,
+				"lifts_open": 18,
+				"total_lifts": 65,
+				"last_updated": "2019-11-28"
+			}]
+	},
+	{	"name": "Northstar",
+		"img": "northstar-bg.jpg",
+		"latest_report": {
+			"snow_depth": 66.6,
+			"lifts_open": 12,
+			"total_lifts": 24,
+			"last_updated": "2019-11-28",
+			"units": "in."
+		},
+		"reports": [
+			{
+				"snow_depth": 56.6,
+				"lifts_open": 2,
+				"total_lifts": 24,
+				"last_updated": "2019-11-20"
+			},{
+				"snow_depth": 56.6,
+				"lifts_open": 2,
+				"total_lifts": 24,
+				"last_updated": "2019-11-20"
+			}]
+	}]
+}

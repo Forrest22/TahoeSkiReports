@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Welcome to Tahoe Ski Reports!</h1>
+	<div class="album py-5 bg-light">
+		{% for resort in resorts['resorts'] %}
+		<div class="card box-shadow">
+			<h2>{{resort.name}}</h2>
+			<p>As of {{resort.latest_report.last_updated}}</p>
+			<ul>
+				<li>Snow depth: {{resort.latest_report.snow_depth}}</li>
+				<li>Lifts open: {{resort.latest_report.lifts_open}}{{resort.latest_report.total_lifts}}</li>
+			</ul>
+		</div>
+	</div>
+	<!-- <article class="media content-section">
+		<div class="media-body">
+			<div class="article-metadata">
+				<a class="mr-2" href="#">{{ resort.name }}</a>
+				<small class="text-muted">{{ resort.latest_report.last_updated }}</small>
+			</div>
+			<h2><a class="article-title" href="#">{{ resort.name }}</a></h2>
+				<ul class="article-content">
+					<li>Snow depth: {{resort.latest_report.snow_depth}}</li>
+					<li>Lifts open: {{resort.latest_report.lifts_open}}/{{resort.latest_report.total_lifts}}</li>
+				</ul>
+		</div>
+	</article> -->
+	{% endfor %}
+{% endblock content %}
