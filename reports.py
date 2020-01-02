@@ -6,6 +6,7 @@ resorts = {}
 
 with open("reports.json", "r") as jsonfile:
 	resorts = json.load(jsonfile)
+
 # print(json.dumps(resorts, sort_keys=True, indent=4))
 # resorts = [
 # 	{
@@ -49,25 +50,42 @@ with open("reports.json", "r") as jsonfile:
 # get the report each day, store it
 # then get the latest report and send it in home
 
+# updates reports of resorts if old
+def updateReports():
+	global resorts
+	if lastUpdatedHoursAgo() > 4:
+		with open("reports.json", "r") as jsonfile:
+			resorts = json.load(jsonfile)
+	return resorts
+
+# returns last updated time in hours (rounded)
+def lastUpdatedHoursAgo():
+	hoursAgo = 0
+	return hoursAgo
+
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html',resorts=resorts)
+	# if(lastUpdatedHoursAgo() > 6):
+	# 	print("Update")
+	resorts = updateReports()
+	return render_template('home.html', resorts=resorts, title="Home")
 
 @app.route('/compare')
 def compare():
-	return render_template('compare.html',resorts=resorts)
+	return render_template('compare.html', resorts=resorts, title="Compare")
 
 @app.route('/kirkwood')
 @app.route('/heavenly')
 @app.route('/northstar')
 def viewResort():
-	print(request.path)
-	return render_template('viewResort.html')
+	pageName = request.path[1:].capitalize()
+	return render_template('viewResort.html', resort=pageName)
 
 @app.route('/about')
 def about():
-	return render_template('about.html',title="About Tahoe Ski Reports")
+	return render_template('about.html',title="About")
 
 if __name__ == '__main__':
+	resorts = updateReports()
 	app.run(debug=True)

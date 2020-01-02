@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
+<h1>Compare Resorts</h1>
+<p>Compare reports from Tahoe area resorts here.</p>
+<div class="album py-5 bg-light">
 <table class="table table-hover">
 	<thead class="thead-dark">
 		<tr>
@@ -13,7 +16,7 @@
 	<tbody>	
 		{% for resort in resorts['resorts'] %}
 		<tr>
-			<td>{{resort.name}}</td>
+			<td><a href="/{{resort.name | lower}}">{{resort.name}}</a></td>
 			<td>{{resort.latest_report.last_updated}}</td>
 			<td>{{resort.latest_report.snow_depth}}</td>
 			<td>{{resort.latest_report.lifts_open}}</td>
@@ -22,4 +25,5 @@
 		{% endfor %}
 	</tbody>
 </table>
+</div>
 {% endblock content %}

@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Welcome to Tahoe Ski Reports!</h1>
+<h1>Tahoe Snow Reports</h1>
+<p>Your guide to ski reports for all epic pass resorts.</p>
 <div class="album py-5 bg-light">
 	<div class="container">
 		<div class="row">
@@ -12,7 +13,9 @@
 						<img class="card-img-top" style="height: 225px; width: 100%; display: block; object-fit: cover; /*opacity: 0.8*/" src="/static/{{resort.img}}" data-holder-rendered="true">
 					</div>
 					<div class="card-body">
-						<h2>{{resort.name}}</h2>
+						<h2 class="article-title">
+							<a href="/{{resort.name | lower}}">{{resort.name}}</a>
+						</h2>
 						<p>As of {{resort.latest_report.last_updated}}</p>
 						<ul>
 							<li>Depth: {{resort.latest_report.snow_depth}} {{resort.latest_report.units}}</li>
