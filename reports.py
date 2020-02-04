@@ -1,4 +1,4 @@
-import json
+import json, 
 from flask import Flask, render_template, url_for, request
 app = Flask(__name__)
 
@@ -87,5 +87,7 @@ def about():
 	return render_template('about.html',title="About")
 
 if __name__ == '__main__':
+	# website_url = 'reports.forrestthe.dev:5000'
+	# app.config['SERVER_NAME'] = website_url
 	resorts = updateReports()
 	app.run(debug=True)
