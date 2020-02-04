@@ -1,4 +1,8 @@
 **/__pycach__
 **/env
+**/geckodriver-v0.26.0-linux64
 *.pyc
 *.DS_Store
+*.log
+*.tar.gz
+
