@@ -13,7 +13,7 @@ app = Flask(__name__)
 global notTheDB 
 notTheDB = {
 	"resorts": [],
-	"last_updated_time": "10:00"
+	"last_updated_time": "12:00"
 }
 
 # with open("reports.json", "r") as jsonfile:
@@ -94,8 +94,6 @@ def updateReports():
 @app.route('/home')
 def home():
 	global notTheDB
-	# if(lastUpdatedHoursAgo() > 6):
-	# 	print("Update")
 
 	notTheDB = updateReports()
 	# print(notTheDB)
@@ -104,12 +102,16 @@ def home():
 @app.route('/compare')
 def compare():
 	global notTheDB
+	notTheDB = updateReports()
 	return render_template('compare.html', resorts=notTheDB, title="Compare")
 
 @app.route('/kirkwood')
 @app.route('/heavenly')
 @app.route('/northstar')
 def viewResort():
+	global notTheDB
+	notTheDB = updateReports()
+
 	resortName = request.path[1:].capitalize()
 	for x in range(0,len(notTheDB["resorts"])):
 		if notTheDB["resorts"][x]["name"] == resortName:
@@ -130,4 +132,4 @@ if __name__ == '__main__':
 	# Updates the reports
 	notTheDB = updateReports()
 
-	app.run(debug=True)
+	app.run(debug=False)
