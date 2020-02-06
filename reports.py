@@ -1,79 +1,112 @@
-import json, 
+import json
+import sys
+import os
+from datetime import date, datetime
 from flask import Flask, render_template, url_for, request
+
+sys.path.insert(0, os.getcwd()+'/src/')
+import reportscanner
+
 app = Flask(__name__)
+global notTheDB 
+notTheDB = {
+	"resorts": [],
+	"last_updated_time": "00:00"
+}
 
-resorts = {}
+# with open("reports.json", "r") as jsonfile:
+# 	notTheDB = json.load(jsonfile)
 
-with open("reports.json", "r") as jsonfile:
-	resorts = json.load(jsonfile)
-
-# print(json.dumps(resorts, sort_keys=True, indent=4))
-# resorts = [
-# 	{
-# 		'name': 'Kirkwood',
-# 		'snow_depth': 15.5,
-# 		'lifts_open': 10,
-# 		'total_lifts': 50,
-# 		'last_updated': '2019-11-28'
-# 	},
-# 	{
-# 		'name': 'Heavenly',
-# 		'snow_depth': 35.5,
-# 		'lifts_open': 18,
-# 		'total_lifts': 65,
-# 		'last_updated': '2019-11-28'
-# 	},
-# 	{
-# 		'name': 'Northstar',
-# 		'latest_report': {
-# 			'snow_depth': 66.6,
-# 			'lifts_open': 12,
-# 			'total_lifts': 24,
-# 			'last_updated': '2019-11-28'
-# 		},
-# 		'reports': [
-# 			{
-# 				'snow_depth': 56.6,
-# 				'lifts_open': 2,
-# 				'total_lifts': 24,
-# 				'last_updated': '2019-11-20'
-# 			},{
-# 				'snow_depth': 56.6,
-# 				'lifts_open': 2,
-# 				'total_lifts': 24,
-# 				'last_updated': '2019-11-20'
-# 			},
-# 		]
-# 	},
-# ]
+def lastUpdatedHoursAgo():
+	global notTheDB
+	try:
+		t1 = datetime.strptime(notTheDB["last_updated_time"], "%H:%M")
+		t2 = datetime.strptime(datetime.now().strftime("%H:%M"), "%H:%M")
+		tdelta =  t2 - t1
+		# print(tdelta.seconds//3600)
+		return tdelta.seconds//3600
+	except Exception as e:
+		print("Error checking time")
+		return  0
 
 # get the report each day, store it
 # then get the latest report and send it in home
-
 # updates reports of resorts if old
+# Note to self: make this async with os.fork()
 def updateReports():
-	global resorts
+	global notTheDB
 	if lastUpdatedHoursAgo() > 4:
-		with open("reports.json", "r") as jsonfile:
-			resorts = json.load(jsonfile)
-	return resorts
+		# Gets current nodb values
+		with open("reports.json", "r") as jsonFile:
+			notTheDB = json.load(jsonFile)
 
-# returns last updated time in hours (rounded)
-def lastUpdatedHoursAgo():
-	hoursAgo = 0
-	return hoursAgo
+		# Forks updating db to not hold up request
+		pid = os.fork()
+		
+		if pid == 0:
+			print("Starting background update.")
+
+			# Get the most recent report, update last_updated_time
+			# try:
+			latestReports = reportscanner.getMostRecentReports()
+			notTheDB["last_updated_time"] = datetime.now().strftime("%H:%M")
+			print(latestReports)
+			# In notTheDB, copies old report, replaces with new report
+			# For each resort take the latest report and insert it into reports
+			# Then find the latest report that matches resort["name"]
+			# And copy latestReports[resort["name"]] into notTheDB["resorts"]
+			tempReports = {}
+			for i, resort in enumerate(notTheDB["resorts"]):
+				thisResort = resort["name"]
+				print("thisResort: " + thisResort)
+				tempReports[thisResort] = resort["latest_report"]
+				# Gets matching resort and inserts the old report
+				# Inserts old report into reports
+				# print("Inserting old " + str(tempReports[thisResort]) + " report into ['reports']")
+				notTheDB["resorts"][i]["reports"].insert(0,tempReports[thisResort])
+				# Finds the corresponding latestReport and replaces latest_report
+				# print(len(latestReports))
+				notTheDB["resorts"][i]["latest_report"] = latestReports[thisResort]
+				print(notTheDB["resorts"][i]["latest_report"])
+
+
+			# print(tempReports)
+			for resort in notTheDB["resorts"]:
+				print(resort["latest_report"])
+
+			# notTheDBs
+
+			with open("reports.json", "w") as jsonFile:
+				notTheDB = json.dump(notTheDB, jsonFile)
+
+			print("Background update complete.")
+			os._exit(0)
+			# except Exception as e:
+			# 	print("Error occurred updating")
+			# 	os._exit(0)
+			# 	raise e
+
+	else:
+		with open("reports.json", "r") as jsonFile:
+			notTheDB = json.load(jsonFile)
+			
+	return notTheDB
 
 @app.route('/')
 @app.route('/home')
 def home():
+	global notTheDB
 	# if(lastUpdatedHoursAgo() > 6):
 	# 	print("Update")
-	resorts = updateReports()
-	return render_template('home.html', resorts=resorts, title="Home")
+
+	notTheDB = updateReports()
+	print(notTheDB)
+	return render_template('home.html', resorts=notTheDB, title="Home")
 
 @app.route('/compare')
 def compare():
-	return render_template('compare.html', resorts=resorts, title="Compare")
+	global notTheDB
+	return render_template('compare.html', resorts=notTheDB, title="Compare")
 
 @app.route('/kirkwood')
 @app.route('/heavenly')
@@ -89,5 +122,5 @@ def about():
 if __name__ == '__main__':
 	# website_url = 'reports.forrestthe.dev:5000'
 	# app.config['SERVER_NAME'] = website_url
-	resorts = updateReports()
+	notTheDB = updateReports()
 	app.run(debug=True)

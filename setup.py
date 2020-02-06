@@ -8,12 +8,14 @@ from sys import platform
 geckodriver = "https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz"
 
 def installGeckodriver():
-	dir_path = "./src/"
+	dir_path = "./src/geckodriver/"
 	fname = "geckodriver-v0.26.0-linux64.tar.gz"
 	if not os.path.exists(dir_path):
 		os.mkdir(dir_path)
+		os.chmod(dir_path, 755)
 	wget.download(geckodriver, out=dir_path)
 	tar_ref = tarfile.open(dir_path + fname)
+	# print(dir_path)
 	tar_ref.extractall(dir_path)
 	tar_ref.close()
 	os.remove(dir_path + fname)

@@ -1,7 +1,7 @@
 **/__pycach__
 **/env
+**/src/geckodriver
 *.pyc
 *.DS_Store
 *.log
 *.tar.gz
-geckodriver

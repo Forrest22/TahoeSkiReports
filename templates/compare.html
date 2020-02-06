@@ -9,6 +9,7 @@
 			<td scope="col"><b>Resort</b></td>
 			<td scope="col"><b>Date of Report</b></td>
 			<td scope="col"><b>Snow Depth</b></td>
+			<td scope="col"><b>Snow Total</b></td>
 			<td scope="col"><b>Lifts Open</b></td>
 			<td scope="col"><b>% of Lifts Open</b></td>
 		</tr>
@@ -17,10 +18,11 @@
 		{% for resort in resorts['resorts'] %}
 		<tr>
 			<td><a href="/{{resort.name | lower}}">{{resort.name}}</a></td>
-			<td>{{resort.latest_report.last_updated}}</td>
+			<td>{{resort.latest_report.last_updated_date}}</td>
 			<td>{{resort.latest_report.snow_depth}}</td>
+			<td>{{resort.latest_report.snow_total}}</td>
 			<td>{{resort.latest_report.lifts_open}}</td>
-			<td>{{ ((resort.latest_report.lifts_open / resort.latest_report.total_lifts) * 100) | round(1)}}%</td>
+			<td>{{ ((resort.latest_report.lifts_open / resort.total_lifts) * 100) | round(1)}}%</td>
 		</tr>
 		{% endfor %}
 	</tbody>

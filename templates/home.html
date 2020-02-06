@@ -16,11 +16,11 @@
 						<h2 class="article-title">
 							<a href="/{{resort.name | lower}}">{{resort.name}}</a>
 						</h2>
-						<p>As of {{resort.latest_report.last_updated}}</p>
+						<p>As of {{resort.latest_report.last_updated_date}}</p>
 						<ul>
 							<li>Depth: {{resort.latest_report.snow_depth}} {{resort.latest_report.units}}</li>
 							<li>Lifts open: {{resort.latest_report.lifts_open}}</li>
-							<!-- <li>Lifts open: {{((resort.latest_report.lifts_open / resort.latest_report.total_lifts) * 100) | round(1)}}%</li> -->
+							<!-- <li>Lifts open: {{((resort.latest_report.lifts_open / resort.total_lifts) * 100) | round(1)}}%</li> -->
 						</ul>
 					</div>
 				</div>
