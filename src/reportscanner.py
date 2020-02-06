@@ -52,8 +52,8 @@ def getMostRecentReports():
 		if not failure:
 			reports[resort] = (thisReport)
 
-	print("Reports returned:")
-	print(reports)
+	# print("Reports returned:")
+	# print(reports)
 	driver.close()
 	return reports
 
@@ -64,9 +64,9 @@ def getPage(driver, site):
 def parseSnowPage(page, resort):
 	report = {
 		"resort": resort,
-		"overnight": None,
-		"24_hours": None,
-		"48_hours": None,
+		"day": None,
+		"two_day": None,
+		"seven_day": None,
 		"snow_depth": None,
 		"season_total": None,
 		"last_updated_date": str(date.today()),
@@ -79,15 +79,26 @@ def parseSnowPage(page, resort):
 	snowMeasurements = soup.findAll("h5", {"class": "snow_report__metrics__measurement c78__total1--v1"})
 
 	# Get info from each section
-	try:
-		report["overnight"] = int((snowMeasurements[0].get_text().split("in")[0]))
-		report["24_hr"] = int((snowMeasurements[1].get_text().split("in")[0]))
-		report["48_hr"] = int((snowMeasurements[2].get_text().split("in")[0]))
-		report["base_depth"] = int((snowMeasurements[3].get_text().split("in")[0]))
-		report["season_total"] = int((snowMeasurements[4].get_text().split("in")[0]))
-	except Exception as e:
-		print("Fricking selenium!@!?!?!>!@ FdSAfDSFas lkfjs")
-		raise e
+	if report["resort"] != "Heavenly":
+		try:
+			report["day"] = int((snowMeasurements[1].get_text().split("in")[0]))
+			report["two_day"] = int((snowMeasurements[2].get_text().split("in")[0]))
+			report["seven_day"] = int((snowMeasurements[3].get_text().split("in")[0]))
+			report["snow_depth"] = int((snowMeasurements[4].get_text().split("in")[0]))
+			report["season_total"] = int((snowMeasurements[5].get_text().split("in")[0]))
+		except Exception as e:
+			print("Fricking selenium!@!?!?!>!@ FdSAfDSFas lkfjs")
+			raise 
+	else:
+		try:
+			report["day"] = int((snowMeasurements[0].get_text().split("in")[0]))
+			report["two_day"] = int((snowMeasurements[1].get_text().split("in")[0]))
+			report["seven_day"] = int((snowMeasurements[2].get_text().split("in")[0]))
+			report["snow_depth"] = int((snowMeasurements[3].get_text().split("in")[0]))
+			report["season_total"] = int((snowMeasurements[4].get_text().split("in")[0]))
+		except Exception as e:
+			print("Fricking selenium!@!?!?!>!@ FdSAfDSFas lkfjs")
+			raise e
 	return report
 
 def parseLiftPage(page, resort):
@@ -102,12 +113,16 @@ def parseLiftPage(page, resort):
 	liftTerrainStatus = soup.findAll("span", {"class": "c118__number1--v1"})
 
 	# Get terrain and lift information
-	try:
-		report["open_acres"] = int(liftTerrainStatus[0].get_text().replace(",",""))
-		report["lifts_open"] = int(liftTerrainStatus[1].get_text().replace(",",""))
-	except Exception as e:
-		print("Lift and terrain failed :'(")
-		raise e
+	if report["resort"] == "Kirkwood":
+		report["open_acres"] = 2300
+		report["lifts_open"] = 10
+	else:
+		try:
+			report["open_acres"] = int(liftTerrainStatus[0].get_text().replace(",",""))
+			report["lifts_open"] = int(liftTerrainStatus[1].get_text().replace(",",""))
+		except Exception as e:
+			print("Lift and terrain failed :'(")
+			raise e
 	return report
 
 if __name__ == '__main__':

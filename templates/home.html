@@ -19,8 +19,7 @@
 						<p>As of {{resort.latest_report.last_updated_date}}</p>
 						<ul>
 							<li>Depth: {{resort.latest_report.snow_depth}} {{resort.latest_report.units}}</li>
-							<li>Lifts open: {{resort.latest_report.lifts_open}}</li>
-							<!-- <li>Lifts open: {{((resort.latest_report.lifts_open / resort.total_lifts) * 100) | round(1)}}%</li> -->
+							<li>Lifts open: {{resort.latest_report.lifts_open}} ({{ ((resort.latest_report.lifts_open / resort.total_lifts) * 100) | round(1)}}%)</li>
 						</ul>
 					</div>
 				</div>
@@ -28,5 +27,6 @@
 			{% endfor %}
 		</div>
 	</div>
+	<a href="https://protectourwinters.org/"><img style="display: block; margin-top: 1em; margin-left: auto; margin-right: auto;" src="/static/pow-main-logo.svg" alt="Protect Our Winters" id="logo" data-height-percentage="66" data-actual-width="1417" data-actual-height="476"></a>
 </div>
 {% endblock content %}

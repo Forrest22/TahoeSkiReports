@@ -8,8 +8,12 @@
 		<tr>
 			<td scope="col"><b>Resort</b></td>
 			<td scope="col"><b>Date of Report</b></td>
+			<td scope="col"><b>24 hour</b></td>
+			<td scope="col"><b>48 hour</b></td>
+			<td scope="col"><b>7 day</b></td>
 			<td scope="col"><b>Snow Depth</b></td>
-			<td scope="col"><b>Snow Total</b></td>
+			<td scope="col"><b>Season Total</b></td>
+			<td scope="col"><b>Open Acres</b></td>
 			<td scope="col"><b>Lifts Open</b></td>
 			<td scope="col"><b>% of Lifts Open</b></td>
 		</tr>
@@ -19,8 +23,12 @@
 		<tr>
 			<td><a href="/{{resort.name | lower}}">{{resort.name}}</a></td>
 			<td>{{resort.latest_report.last_updated_date}}</td>
-			<td>{{resort.latest_report.snow_depth}}</td>
-			<td>{{resort.latest_report.snow_total}}</td>
+			<td>{{resort.latest_report.day}} {{resort.latest_report.units}}</td>
+			<td>{{resort.latest_report.two_day}} {{resort.latest_report.units}}</td>
+			<td>{{resort.latest_report.seven_day}} {{resort.latest_report.units}}</td>
+			<td>{{resort.latest_report.snow_depth}} {{resort.latest_report.units}}</td>
+			<td>{{resort.latest_report.season_total}} {{resort.latest_report.units}}</td>
+			<td>{{resort.latest_report.open_acres}}</td>
 			<td>{{resort.latest_report.lifts_open}}</td>
 			<td>{{ ((resort.latest_report.lifts_open / resort.total_lifts) * 100) | round(1)}}%</td>
 		</tr>

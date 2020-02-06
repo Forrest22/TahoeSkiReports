@@ -1,4 +1,18 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>{{resort}}</h1>
+<div class="container">
+	<h1 class="bottom-left">{{resort.name}}</h1>
+	<img style="width:100%; background-size:cover;" class="rounded mx-auto d-block" src="static/{{resort.img}}">	
+</div>
+<div style="margin: 1em; padding: .25em;">
+	<h3>Current Conditions:</h3>
+	<p>Last updated: {{resort.latest_report.last_updated_date}}</p>
+	<p>24 Hours: {{resort.latest_report.day}} {{resort.latest_report.units}}</p>
+	<p>48 Hours: {{resort.latest_report.two_day}} {{resort.latest_report.units}}</p>
+	<p>7 Days: {{resort.latest_report.seven_day}} {{resort.latest_report.units}}</p>
+	<p>Snow Depth: {{resort.latest_report.snow_depth}} {{resort.latest_report.units}}</p>
+	<p>Season Total: {{resort.latest_report.season_total}} {{resort.latest_report.units}}</p>
+	<p>Open Acres: {{resort.latest_report.open_acres}}</p>
+	<p>Lifts Open: {{resort.latest_report.lifts_open}} ({{ ((resort.latest_report.lifts_open / resort.total_lifts) * 100) | round(1)}}%)</p>
+</div>
 {% endblock content %}

@@ -12,10 +12,16 @@ a {
   color: #2184c7;
 }
 
+.container {
+  position: relative;
+}
+
 .bottom-left {
   position: absolute;
   bottom: 0em;
-  left: .6125em;
+  background: rgba(255, 255, 255, 0.75);
+  padding: .25em;
+  margin-bottom: 0px;
 }
 
 .bg-steel {
