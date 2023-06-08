@@ -8,5 +8,5 @@ MarkupSafe==1.1.1
 selenium==3.141.0
 soupsieve==1.9.5
 urllib3==1.26.5
-Werkzeug==0.16.0
+Werkzeug==2.2.3
 wget==3.2
